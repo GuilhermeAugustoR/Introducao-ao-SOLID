@@ -9,7 +9,12 @@ class TurnUserAdminUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   execute({ user_id }: IRequest): User {
-    // Complete aqui
+    const turnUserAdminAlredyExist = this.usersRepository.findById(user_id);
+
+    if (turnUserAdminAlredyExist) {
+      throw new Error("User alredy exist");
+    }
+    // return this.usersRepository.create({ user_id });
   }
 }
 
