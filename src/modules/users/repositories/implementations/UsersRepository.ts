@@ -20,6 +20,7 @@ class UsersRepository implements IUsersRepository {
 
   create({ name, email }: ICreateUserDTO): User {
     const user = new User();
+
     Object.assign(user, {
       name,
       email,
@@ -43,8 +44,14 @@ class UsersRepository implements IUsersRepository {
   }
 
   turnAdmin(receivedUser: User): User {
-    // const user = this.users.find((user) => user.admin === receivedUser);
-    // return;
+    const index = this.users.findIndex((user) => user.id === receivedUser.id);
+    // eslint-disable-next-line no-param-reassign
+    receivedUser.admin = true;
+    // eslint-disable-next-line no-param-reassign
+    receivedUser.updated_at = new Date();
+    this.users[index] = receivedUser;
+
+    return receivedUser;
   }
 
   list(): User[] {
